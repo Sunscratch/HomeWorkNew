@@ -1,38 +1,62 @@
 package algo;
 
 
+import java.util.Comparator;
+
 public class PriorityQueue<T extends Comparable> {
 
-  Node root;
+  private Object[] array = new Object[10];
+  private int size = 0;
+  private Comparator<T> comparator;
+
+  public PriorityQueue(){}
+
+  public PriorityQueue(Comparator comparator){
+    this.comparator = comparator;
+  }
 
   public void insert (T item) {
-    Node newNode = new Node(item);
-    Node current = root;
-    if (root == null) root = newNode;
-    else {
-      if (newNode.data.compareTo(current.data) > 0 && hasNoBranches(current)) {
-        current.left = newNode;
-      }
-      //else if ()
-    }
+
   }
 
   public T min() {
-    return root.data;
+    return (T)array[0];
   }
 
-  private class Node {
-    Node left;
-    Node right;
-    T data;
+  private void swim(int i) {
 
-    Node(T item) {
-      data = item;
+  }
+
+  private void sink(int i){
+
+  }
+
+  private boolean lessOrEqual(int first, int second) {
+    if (comparator == null) {
+      return ((Comparable)array[first]).compareTo(array[second]) < 1;
+    } else {
+      return (comparator.compare((T)array[first], (T)array[second])) < 1;
     }
 
   }
-  private boolean hasNoBranches(Node node) {
-    return node.left == null && node.right == null;
+
+  private boolean isRoot(int i) {
+    return i == 0;
+  }
+
+  private int getLeftChildIndex(int i) {
+    return 2 * i + 1;
+  }
+
+  private int getRightChildIndex(int i) {
+    return 2 * i + 2;
+  }
+
+  private int getChildIndex(int i) {
+    if (size % 2 == 0) {
+      return getRightChildIndex(i);
+    }
+    return getLeftChildIndex(i);
   }
 
 }
