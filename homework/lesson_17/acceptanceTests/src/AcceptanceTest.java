@@ -1,14 +1,8 @@
-import org.junit.Test;
-import org.junit.Before;
-import org.junit.Ignore;
-
-import static org.junit.Assert.assertThat;
-import static org.hamcrest.Matchers.*;
-
 import algo.PriorityQueue;
-import algo.PQSorter;
+import org.junit.Test;
 
-import java.util.Arrays;
+import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertThat;
 
 public class AcceptanceTest {
   @Test
@@ -21,14 +15,18 @@ public class AcceptanceTest {
     pq.insert(30);
     pq.insert(40);
 
+    assertThat(pq.testArray(), is("10 30 20 30 40 "));
+
+
     assertThat(pq.min(), is(10));
     assertThat(pq.min(), is(20));
     assertThat(pq.min(), is(30));
     assertThat(pq.min(), is(30));
     assertThat(pq.min(), is(40));
+
   }
 
-  @Test
+  /*@Test
   public void priorityQueueSortTestAscendingOrder() {
     PQSorter sorter = new PQSorter(PQSorter.Order.ASCENDING);
     String[] unsorted = {"I", "like", "Java", "but", "sometimes", "I", "feel", "like", "Java", "doesn't", "like", "me"};
@@ -44,5 +42,5 @@ public class AcceptanceTest {
 
     assertThat(sorter.<String>sort(unsorted),
       is(new String[] {"sometimes", "me", "like", "like", "like", "feel", "doesn't", "but", "Java", "Java", "I", "I"}));
-  }
+  }*/
 }
