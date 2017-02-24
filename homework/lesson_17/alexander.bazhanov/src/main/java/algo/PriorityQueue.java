@@ -21,8 +21,9 @@ public class PriorityQueue<T extends Comparable> {
       System.arraycopy(array,0, newArray,0, array.length);
       array = newArray;
     }
-    array[size++] = item;
+    array[size] = item;
     swim(size);
+    size++;
   }
 
   public T min() {
@@ -40,21 +41,21 @@ public class PriorityQueue<T extends Comparable> {
 
   }
   @SuppressWarnings("unchecked")
-  private boolean lessOrEqual(int first, int second) {
+  private boolean lessOrEqual(int child, int parent) {
     if (comparator == null) {
-      return ((Comparable)array[first]).compareTo(array[second]) < 1 ;
+      return ((Comparable)array[child]).compareTo(array[parent]) < 1 ;
     } else {
-      return (comparator.compare((T)array[first], (T)array[second])) < 1;
+      return (comparator.compare((T)array[child], (T)array[parent])) < 1;
     }
 
   }
 
   private boolean isRoot(int i) {
-    return i == 1;
+    return i == 0;
   }
 
   private int getParentIndex (int i) {
-    return i / 2;
+    return (i - 1) / 2;
   }
 
   private int getLeftChildIndex(int i) {
@@ -79,4 +80,13 @@ public class PriorityQueue<T extends Comparable> {
     array[k] = temp;
   }
 
+  public String testArray() {
+    String result = "";
+    for (int i = 0; i < size; i++) {
+      result = result + array[i] + " ";
+    }
+    return result;
+  }
+
 }
+
