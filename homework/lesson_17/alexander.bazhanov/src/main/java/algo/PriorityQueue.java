@@ -11,11 +11,11 @@ public class PriorityQueue<T extends Comparable> implements Iterable<T> {
 
   public PriorityQueue(){}
 
-  public PriorityQueue(Comparator comparator){
+  public PriorityQueue(Comparator comparator) {
     this.comparator = comparator;
   }
 
-  public void insert (T item) {
+  public void insert(T item) {
     if (size == array.length) {
       Object[] newArray = new Object[array.length * 2];
       System.arraycopy(array,0, newArray,0, array.length);
@@ -27,30 +27,31 @@ public class PriorityQueue<T extends Comparable> implements Iterable<T> {
   }
 
   public T min() {
-    T min = (T) array[0];
-    array[0] = array[size-1];
-    array[size-1] = null;
+    final T min = (T) array[0];
+    array[0] = array[size - 1];
+    array[size - 1] = null;
     size--;
     sink(0);
     return min;
   }
 
-  private void swim(int i) {
-    while(!isRoot(i) && lessOrEqual(i, getParentIndex(i))){
-      exchange(i, getParentIndex(i));
-      i = getParentIndex(i);
+  private void swim(int index) {
+    while (!isRoot(index) && lessOrEqual(index, getParentIndex(index))) {
+      exchange(index, getParentIndex(index));
+      index = getParentIndex(index);
     }
   }
 
-  private void sink(int i) {
+  private void sink(int index) {
 
-    while (getChildIndex(i) < size && lessOrEqual(getChildIndex(i), i)) {
-      int child = getChildIndex(i);
-      exchange(child, i);
-      i = child;
+    while (getChildIndex(index) < size && lessOrEqual(getChildIndex(index), index)) {
+      int child = getChildIndex(index);
+      exchange(child, index);
+      index = child;
     }
 
   }
+
   @SuppressWarnings("unchecked")
   private boolean lessOrEqual(int child, int parent) {
     if (comparator == null) {
@@ -61,35 +62,35 @@ public class PriorityQueue<T extends Comparable> implements Iterable<T> {
 
   }
 
-  private boolean isRoot(int i) {
-    return i == 0;
+  private boolean isRoot(int index) {
+    return index == 0;
   }
 
-  private int getParentIndex (int i) {
-    return (i - 1) / 2;
+  private int getParentIndex(int index) {
+    return (index - 1) / 2;
   }
 
-  private int getLeftChildIndex(int i) {
-    return 2 * i + 1;
+  private int getLeftChildIndex(int index) {
+    return 2 * index + 1;
   }
 
-  private int getRightChildIndex(int i) {
-    return 2 * i + 2;
+  private int getRightChildIndex(int index) {
+    return 2 * index + 2;
   }
 
-  private int getChildIndex(int i) {
-    int leftChild = getLeftChildIndex(i);
-    if (leftChild < size - 1 && lessOrEqual(getRightChildIndex(i), leftChild)) {
-      return getRightChildIndex(i);
+  private int getChildIndex(int index) {
+    int leftChild = getLeftChildIndex(index);
+    if (leftChild < size - 1 && lessOrEqual(getRightChildIndex(index), leftChild)) {
+      return getRightChildIndex(index);
     }
     return leftChild;
   }
 
   @SuppressWarnings("unchecked")
-  private void exchange(int i, int k) {
-    T temp = (T) array[i];
-    array[i] = array[k];
-    array[k] = temp;
+  private void exchange(int firstElement, int secondElement) {
+    T temp = (T) array[firstElement];
+    array[firstElement] = array[secondElement];
+    array[secondElement] = temp;
   }
 
   public String testArray() {
@@ -116,7 +117,7 @@ public class PriorityQueue<T extends Comparable> implements Iterable<T> {
 
     public boolean hasNext() {
       return index < array.length && array[index] != null;
-  }
+    }
 
     @Override
     public T next() {
