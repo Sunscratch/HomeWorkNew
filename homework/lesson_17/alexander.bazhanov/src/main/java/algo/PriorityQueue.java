@@ -1,8 +1,9 @@
 package algo;
 
 import java.util.Comparator;
+import java.util.Iterator;
 
-public class PriorityQueue<T extends Comparable> {
+public class PriorityQueue<T extends Comparable> implements Iterable<T> {
 
   private Object[] array = new Object[10];
   private int size = 0;
@@ -97,6 +98,30 @@ public class PriorityQueue<T extends Comparable> {
       result = result + array[i] + " ";
     }
     return result;
+  }
+
+
+  @Override
+  public Iterator<T> iterator() {
+    return new PriorityQueueIterator(array);
+  }
+
+  private class PriorityQueueIterator implements Iterator<T> {
+    private Object[] array;
+    int index = 0;
+
+    PriorityQueueIterator(Object[] array) {
+      this.array = array;
+    }
+
+    public boolean hasNext() {
+      return index < array.length && array[index] != null;
+  }
+
+    @Override
+    public T next() {
+      return (T) array[index++];
+    }
   }
 
 }
