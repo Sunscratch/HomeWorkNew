@@ -6,7 +6,7 @@ import static org.junit.Assert.assertThat;
 
 public class AcceptanceTest {
   @Test
-  public void priorityQueueTest() {
+  public void priorityQueueInputTest() {
     PriorityQueue<Integer> pq = new PriorityQueue<>();
 
     pq.insert(10);
@@ -17,11 +17,35 @@ public class AcceptanceTest {
 
     assertThat(pq.testArray(), is("10 30 20 30 40 "));
 
+  }
 
+  @Test
+  public void priorityQueueOutputTest() {
+    PriorityQueue<Integer> pq = new PriorityQueue<>();
+
+    pq.insert(10);
+    pq.insert(30);
+    pq.insert(20);
+    pq.insert(30);
+    pq.insert(40);
+    pq.insert(10);
+    pq.insert(30);
+    pq.insert(20);
+    pq.insert(30);
+    pq.insert(40);
+    pq.insert(1);
+
+
+    assertThat(pq.min(), is(1));
     assertThat(pq.min(), is(10));
+    assertThat(pq.min(), is(10));
+    assertThat(pq.min(), is(20));
     assertThat(pq.min(), is(20));
     assertThat(pq.min(), is(30));
     assertThat(pq.min(), is(30));
+    assertThat(pq.min(), is(30));
+    assertThat(pq.min(), is(30));
+    assertThat(pq.min(), is(40));
     assertThat(pq.min(), is(40));
 
   }

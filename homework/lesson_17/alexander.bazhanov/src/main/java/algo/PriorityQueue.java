@@ -1,6 +1,5 @@
 package algo;
 
-
 import java.util.Comparator;
 
 public class PriorityQueue<T extends Comparable> {
@@ -27,7 +26,12 @@ public class PriorityQueue<T extends Comparable> {
   }
 
   public T min() {
-    return (T)array[0];
+    T min = (T) array[0];
+    array[0] = array[size-1];
+    array[size-1] = null;
+    size--;
+    sink(0);
+    return min;
   }
 
   private void swim(int i) {
@@ -37,7 +41,13 @@ public class PriorityQueue<T extends Comparable> {
     }
   }
 
-  private void sink(int i){
+  private void sink(int i) {
+
+    while (getChildIndex(i) < size && lessOrEqual(getChildIndex(i), i)) {
+      int child = getChildIndex(i);
+      exchange(child, i);
+      i = child;
+    }
 
   }
   @SuppressWarnings("unchecked")
@@ -67,10 +77,11 @@ public class PriorityQueue<T extends Comparable> {
   }
 
   private int getChildIndex(int i) {
-    if (size % 2 == 0) {
+    int leftChild = getLeftChildIndex(i);
+    if (leftChild < size - 1 && lessOrEqual(getRightChildIndex(i), leftChild)) {
       return getRightChildIndex(i);
     }
-    return getLeftChildIndex(i);
+    return leftChild;
   }
 
   @SuppressWarnings("unchecked")
