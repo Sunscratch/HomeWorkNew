@@ -1,3 +1,4 @@
+import algo.PQSorter;
 import algo.PriorityQueue;
 import org.junit.Test;
 
@@ -50,7 +51,7 @@ public class AcceptanceTest {
 
   }
 
-  /*@Test
+  @Test
   public void priorityQueueSortTestAscendingOrder() {
     PQSorter sorter = new PQSorter(PQSorter.Order.ASCENDING);
     String[] unsorted = {"I", "like", "Java", "but", "sometimes", "I", "feel", "like", "Java", "doesn't", "like", "me"};
@@ -66,5 +67,5 @@ public class AcceptanceTest {
 
     assertThat(sorter.<String>sort(unsorted),
       is(new String[] {"sometimes", "me", "like", "like", "like", "feel", "doesn't", "but", "Java", "Java", "I", "I"}));
-  }*/
+  }
 }
