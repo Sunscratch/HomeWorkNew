@@ -101,6 +101,10 @@ public class PriorityQueue<T extends Comparable> implements Iterable<T> {
     return result;
   }
 
+  public int getSize() {
+    return size;
+  }
+
 
   @Override
   public Iterator<T> iterator() {
