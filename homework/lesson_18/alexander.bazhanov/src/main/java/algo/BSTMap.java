@@ -52,11 +52,37 @@ public class BSTMap<K extends Comparable, V> {
   }
 
   public void delete(K key) {
+    delete(root, key);
+  }
 
+  private void delete(Node node, K key) {
+    if (node == null) {
+      System.out.println("No such element");
+    } else {
+      if (compare(key, node.key) < 0 ) {
+        delete(node.left, key);
+      } else if (compare(key, node.key) > 0){
+        delete(node.right, key);
+      } else {
+        if (isLeaf(node)) {
+          node = null;
+        } else if (node.left != null && node.right != null) {
+          node = null;
+        } else{
+          if (node.left != null) {
+            node = node.left;
+          } else node = node.right;
+         }
+      }
+    }
   }
 
   private int compare(K keyOne, K keyTwo) {
     return keyOne.compareTo(keyTwo);
+  }
+
+  private boolean isLeaf(Node node) {
+    return node.left == null && node.right == null;
   }
 
 }
