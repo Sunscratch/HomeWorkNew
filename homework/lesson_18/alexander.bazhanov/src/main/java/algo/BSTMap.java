@@ -2,13 +2,13 @@ package algo;
 
 public class BSTMap<K extends Comparable, V> {
 
-  Node root;
+  private Node root;
 
   private class Node {
     K key;
     V value;
     Node left;
-    Node rigth;
+    Node right;
 
     private Node (K key, V value) {
       this.key = key;
@@ -28,7 +28,7 @@ public class BSTMap<K extends Comparable, V> {
       if (compare(key, node.key) < 0 ) {
         node.left = put(node.left, key, value);
       } else if (compare(key, node.key) > 0){
-        node.rigth = put(node.rigth, key, value);
+        node.right = put(node.right, key, value);
       } else {
         node.value = value;
       } return node;
@@ -46,7 +46,7 @@ public class BSTMap<K extends Comparable, V> {
       if (compare(key, node.key) < 0) {
         return get(node.left, key);
       } else if (compare(key, node.key) > 0) {
-        return get(node.rigth, key);
+        return get(node.right, key);
       } else return node.value;
     }
   }
