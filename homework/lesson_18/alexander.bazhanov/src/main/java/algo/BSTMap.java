@@ -67,7 +67,7 @@ public class BSTMap<K extends Comparable, V> {
         if (isLeaf(node)) {
           node = null;
         } else if (node.left != null && node.right != null) {
-          node = null;
+          node = getNodeToSwap(node);
         } else{
           if (node.left != null) {
             node = node.left;
@@ -83,6 +83,14 @@ public class BSTMap<K extends Comparable, V> {
 
   private boolean isLeaf(Node node) {
     return node.left == null && node.right == null;
+  }
+
+  private Node getNodeToSwap(Node node) {
+    Node result = node.left;
+    if (result.key.compareTo(result.left.key) > -1) {
+      return getNodeToSwap(result);
+    } else return result;
+
   }
 
 }
