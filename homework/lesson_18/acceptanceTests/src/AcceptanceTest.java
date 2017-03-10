@@ -15,12 +15,14 @@ public class AcceptanceTest {
     map.put(30, "Thirty");
     map.put(40, "Fourty");
 
-    map.delete(30);
+    map.delete(10);
 
-    assertThat(map.get(10), is("Ten"));
+    assertThat(map.get(10), is(nullValue()));
     assertThat(map.get(20), is("Twenty"));
     assertThat(map.get(40), is("Fourty"));
-    assertThat(map.get(30), is(nullValue()));
+    assertThat(map.get(30), is("Thirty"));
     assertThat(map.get(100), is(nullValue()));
+
+
   }
 }

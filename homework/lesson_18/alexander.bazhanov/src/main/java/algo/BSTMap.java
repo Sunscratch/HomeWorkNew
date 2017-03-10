@@ -52,29 +52,47 @@ public class BSTMap<K extends Comparable, V> {
   }
 
   public void delete(K key) {
-    delete(root, key);
+    if (root == null) {
+      System.out.println("No such element");
+
+    } else if(root.key == key){
+      swapValues(getNodeToSwap(root), root);
+
+    } else {
+      delete(root, key);
+
+    }
   }
 
-  private void delete(Node node, K key) {
-    if (node == null) {
-      System.out.println("No such element");
-    } else {
-      if (compare(key, node.key) < 0 ) {
-        delete(node.left, key);
-      } else if (compare(key, node.key) > 0){
-        delete(node.right, key);
+  private void delete(Node parent, K key) {
+    Node child;
+    if (compare(key, parent.key) > 0) {
+      child = parent.right;
+      if (child.key != key) {
+        delete(child, key);
       } else {
-        if (isLeaf(node)) {
-          node = null;
-        } else if (node.left != null && node.right != null) {
-          node = getNodeToSwap(node);
-        } else{
-          if (node.left != null) {
-            node = node.left;
-          } else node = node.right;
-         }
+        if (isLeaf(child)) {
+          parent.right = null;
+        } else {
+          swapValues(getNodeToSwap(child), child);
+        }
+      }
+    } else {
+      child = parent.left;
+      if (child.key != key) {
+        delete(child, key);
+      } else {
+        if (isLeaf(child)) {
+          parent.left = null;
+        } else {
+          swapValues(getNodeToSwap(child), child);
+        }
       }
     }
+
+
+
+
   }
 
   private int compare(K keyOne, K keyTwo) {
@@ -86,11 +104,44 @@ public class BSTMap<K extends Comparable, V> {
   }
 
   private Node getNodeToSwap(Node node) {
-    Node result = node.left;
-    if (result.key.compareTo(result.left.key) > -1) {
-      return getNodeToSwap(result);
-    } else return result;
-
+    Node parent = node;
+    Node result;
+    if (parent.left != null && parent.right == null) {
+      result = parent.left;
+      result.left = parent.left.left;
+    } else if (parent.left == null && parent.right != null) {
+      result = parent.right;
+      result.right = parent.right.right;
+    } else {
+      if (isLeaf(parent.right)) {
+        result = parent.right;
+        parent.right = null;
+      } else {
+        if (parent.right.left == null) {
+          result = parent.right;
+          parent.right = parent.right.right;
+        } else {
+          result = findMinNode(parent.right);
+        }
+      }
+    }
+    return result;
   }
 
+  private void swapValues(Node from, Node to) {
+    to.key = from.key;
+    to.value = from.value;
+  }
+
+
+  private Node findMinNode(Node node) {
+    Node parent = node;
+    Node child = parent.left;
+    if (child.left == null) {
+      parent.left = null;
+      return child;
+    } else {
+      return findMinNode(child);
+    }
+  }
 }
