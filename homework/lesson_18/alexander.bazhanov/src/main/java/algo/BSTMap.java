@@ -1,5 +1,7 @@
 package algo;
 
+
+
 public class BSTMap<K extends Comparable, V> {
 
   private Node root;
@@ -10,13 +12,13 @@ public class BSTMap<K extends Comparable, V> {
     Node left;
     Node right;
 
-    private Node (K key, V value) {
+    private Node(K key, V value) {
       this.key = key;
       this.value = value;
     }
   }
 
-  public void put(K key, V value){
+  public void put(K key, V value) {
     root = put(root, key, value);
 
   }
@@ -27,11 +29,12 @@ public class BSTMap<K extends Comparable, V> {
     } else {
       if (compare(key, node.key) < 0 ) {
         node.left = put(node.left, key, value);
-      } else if (compare(key, node.key) > 0){
+      } else if (compare(key, node.key) > 0) {
         node.right = put(node.right, key, value);
       } else {
         node.value = value;
-      } return node;
+      }
+      return node;
     }
   }
 
@@ -47,7 +50,9 @@ public class BSTMap<K extends Comparable, V> {
         return get(node.left, key);
       } else if (compare(key, node.key) > 0) {
         return get(node.right, key);
-      } else return node.value;
+      } else {
+        return node.value;
+      }
     }
   }
 
@@ -55,7 +60,7 @@ public class BSTMap<K extends Comparable, V> {
     if (root == null) {
       System.out.println("No such element");
 
-    } else if(root.key == key){
+    } else if (root.key == key) {
       swapValues(getNodeToSwap(root), root);
 
     } else {
@@ -66,7 +71,7 @@ public class BSTMap<K extends Comparable, V> {
 
   private void delete(Node parent, K key) {
     Node child;
-    if (compare(key, parent.key) > 0) {
+    if (compare(key, parent.key) > 0 && parent.right != null) {
       child = parent.right;
       if (child.key != key) {
         delete(child, key);
@@ -77,7 +82,7 @@ public class BSTMap<K extends Comparable, V> {
           swapValues(getNodeToSwap(child), child);
         }
       }
-    } else {
+    } else if (compare(key, parent.key) < 0 && parent.left != null){
       child = parent.left;
       if (child.key != key) {
         delete(child, key);
@@ -88,11 +93,9 @@ public class BSTMap<K extends Comparable, V> {
           swapValues(getNodeToSwap(child), child);
         }
       }
+    } else {
+      System.out.println("No such element");
     }
-
-
-
-
   }
 
   private int compare(K keyOne, K keyTwo) {
@@ -106,24 +109,22 @@ public class BSTMap<K extends Comparable, V> {
   private Node getNodeToSwap(Node node) {
     Node parent = node;
     Node result;
-    if (parent.left != null && parent.right == null) {
-      result = parent.left;
-      result.left = parent.left.left;
-    } else if (parent.left == null && parent.right != null) {
-      result = parent.right;
-      result.right = parent.right.right;
-    } else {
+    if (parent.right != null) {
       if (isLeaf(parent.right)) {
         result = parent.right;
         parent.right = null;
       } else {
         if (parent.right.left == null) {
           result = parent.right;
-          parent.right = parent.right.right;
+          result.right = parent.right.right;
         } else {
           result = findMinNode(parent.right);
         }
       }
+    } else {
+      result = parent.left;
+      parent.left = result.left;
+      parent.right = result.right;
     }
     return result;
   }
@@ -131,6 +132,7 @@ public class BSTMap<K extends Comparable, V> {
   private void swapValues(Node from, Node to) {
     to.key = from.key;
     to.value = from.value;
+
   }
 
 
