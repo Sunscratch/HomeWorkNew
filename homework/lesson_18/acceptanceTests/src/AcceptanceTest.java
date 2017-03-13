@@ -94,5 +94,23 @@ public class AcceptanceTest {
     assertThat(map.get(17), is(nullValue()));
     assertThat(map.get(18), is("18"));
 
+    map.delete(15);
+    map.delete(11);
+    map.delete(18);
+
+    assertThat(map.get(10), is(nullValue()));
+    assertThat(map.get(20), is(nullValue()));
+    assertThat(map.get(40), is(nullValue()));
+    assertThat(map.get(30), is(nullValue()));
+    assertThat(map.get(5), is(nullValue()));
+    assertThat(map.get(6), is(nullValue()));
+    assertThat(map.get(3), is(nullValue()));
+    assertThat(map.get(4), is(nullValue()));
+    assertThat(map.get(1), is(nullValue()));
+    assertThat(map.get(15), is(nullValue()));
+    assertThat(map.get(11), is(nullValue()));
+    assertThat(map.get(17), is(nullValue()));
+    assertThat(map.get(18), is(nullValue()));
+
   }
 }
