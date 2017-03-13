@@ -1,7 +1,4 @@
 package algo;
-
-
-
 public class BSTMap<K extends Comparable, V> {
 
   private Node root;
@@ -98,6 +95,7 @@ public class BSTMap<K extends Comparable, V> {
     }
   }
 
+  @SuppressWarnings("unchecked")
   private int compare(K keyOne, K keyTwo) {
     return keyOne.compareTo(keyTwo);
   }
@@ -106,8 +104,7 @@ public class BSTMap<K extends Comparable, V> {
     return node.left == null && node.right == null;
   }
 
-  private Node getNodeToSwap(Node node) {
-    Node parent = node;
+  private Node getNodeToSwap(Node parent) {
     Node result;
     if (parent.right != null) {
       if (isLeaf(parent.right)) {
@@ -116,7 +113,7 @@ public class BSTMap<K extends Comparable, V> {
       } else {
         if (parent.right.left == null) {
           result = parent.right;
-          result.right = parent.right.right;
+          parent.right = result.right;
         } else {
           result = findMinNode(parent.right);
         }
@@ -136,8 +133,7 @@ public class BSTMap<K extends Comparable, V> {
   }
 
 
-  private Node findMinNode(Node node) {
-    Node parent = node;
+  private Node findMinNode(Node parent) {
     Node child = parent.left;
     if (child.left == null) {
       parent.left = null;
