@@ -56,19 +56,21 @@ public class BSTMap<K extends Comparable, V> {
   public void delete(K key) {
     if (root == null) {
       System.out.println("No such element");
-
-    } else if (root.key == key) {
-      swapValues(getNodeToSwap(root), root);
-
     } else {
       delete(root, key);
-
     }
   }
 
   private void delete(Node parent, K key) {
     Node child;
-    if (compare(key, parent.key) > 0 && parent.right != null) {
+
+    if (isRoot(parent) && compare(key,parent.key) == 0) {
+      if (isLeaf(parent)) {
+        root = null;
+      } else {
+        swapValues(getNodeToSwap(root), root);
+      }
+    } else if (compare(key, parent.key) > 0 && parent.right != null) {
       child = parent.right;
       if (child.key != key) {
         delete(child, key);
@@ -141,5 +143,9 @@ public class BSTMap<K extends Comparable, V> {
     } else {
       return findMinNode(child);
     }
+  }
+
+  private boolean isRoot(Node node) {
+    return node == root;
   }
 }
